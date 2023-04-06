@@ -1,10 +1,13 @@
+import { FieldValue } from "firebase-admin/firestore";
 import { db } from "./dbConnect.js";
-
+// insert timeStamp(1/2)
 const coll = db.collection('employees');
 
 /* -----===<< CREATE >>===----- */
 export async function addEmployee(req, res) {
   const newEmployee = req.body;
+  newEmployee.createdA = FieldValue .serverTimestamp()
+  // insert timeStampe (2/2)
   await coll.add(newEmployee);
   res.status(201).send({ message: "Employee successfully added." });
 }
@@ -18,7 +21,6 @@ export async function getAllEmployees(req, res) {
   
   res.status(201).send(employees)
 }
-
 
 /* -----===<< UPDATE >>===----- */
 export async function updateEmployee(req, req) {
@@ -36,5 +38,5 @@ export async function deleteEmployee(req, res) {
   const { id } = req.params;
 
   await coll.doc(id).delete();
-  res.staus(201).send('EMPLOYEE TERMINATED')
+  res.staus(202).send('EMPLOYEE TERMINATED')
 }
